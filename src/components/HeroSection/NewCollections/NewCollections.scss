@@ -1,0 +1,29 @@
+.app__newCollections{
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: var(--smooth);
+  h1{
+    font-size: 55px;
+  }
+
+  .app__newCollections-cardsContainer{
+    width: 100%;
+    gap: 1rem;
+    padding: 2rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    
+    justify-content: center;
+    align-items: center;
+    transition: var(--smooth);
+  }
+  @media screen and (max-width:720px) {
+   h1{
+    font-size: 36px;
+   } 
+  }
+}

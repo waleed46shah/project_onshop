@@ -1,7 +1,7 @@
 import React from "react";
 import './HeroSection.scss'
 import Banner from "./Banner/Banner";
-import NewCollections from "./NewCollections/NewCollections";
+
 
 const HeroSection = () => {
   return (

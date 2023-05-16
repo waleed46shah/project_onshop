@@ -1,10 +1,8 @@
 import React from "react";
 import CollectionCard from "./CollectionCard/CollectionCard";
-import image from "../../../assets/dusk-mountains-4k-ma.jpg";
 import { useEffect, useState } from "react";
 import { client, urlFor } from "../../../client";
 import "./NewCollections.scss";
-import { motion } from "framer-motion";
 
 const NewCollections = () => {
   const [product, setProduct] = useState([]);

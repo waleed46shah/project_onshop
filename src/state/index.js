@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
   isCartOpen: false,
   cart: [],
   items: [],
+  currentProduct: [],
 };
 
 export const cartSlice = createSlice({
@@ -13,37 +14,35 @@ export const cartSlice = createSlice({
     setItems: (state, action) => {
       try {
         state.items = action.payload;
-        console.log(state.items);
-      } catch {}
+      } catch { }
     },
     addToCart: (state, action) => {
       try {
-        
-        
+
+
         state.cart = [...state.cart, { ...action.payload.item }];
-        console.log(state.cart);
-        console.log(state.items);
-      } catch {}
+
+      } catch { }
     },
     removeFromCart: (state, action) => {
       try {
         const itemId = action.payload;
-        
+
         state.cart = state.cart.filter((item) => item._id !== itemId);
-        console.log(window.store.getState())
-      } catch {}
+
+      } catch { }
     },
 
     increaseCount: (state, action) => {
       try {
-        
+
         state.cart = state.cart.map((item) => {
           if (item._id === action.payload._id) {
             item.count++;
           }
           return item;
         });
-      } catch {}
+      } catch { }
     },
     decreaseCount: (state, action) => {
       try {
@@ -53,13 +52,13 @@ export const cartSlice = createSlice({
           }
           return item;
         });
-      } catch {}
+      } catch { }
     },
-    clearCart: (state,action)=>{
-      try{
+    clearCart: (state, action) => {
+      try {
         state.cart = [];
       }
-      catch{
+      catch {
 
       }
     }
@@ -67,7 +66,11 @@ export const cartSlice = createSlice({
     setIsCartOpen: (state) => {
       try {
         state.isCartOpen = !state.isCartOpen;
-      } catch {}
+      } catch { }
+    },
+
+    setCurrentProduct: (state, action) => {
+      state.currentProduct = action.payload.id;
     },
   },
 });
@@ -80,6 +83,7 @@ export const {
   decreaseCount,
   setIsCartOpen,
   clearCart,
+  setCurrentProduct,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

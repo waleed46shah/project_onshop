@@ -6,7 +6,6 @@ import { images } from "../../constants";
 import { MdShoppingCart } from "react-icons/md";
 import { setIsCartOpen } from "../../state";
 import { useSelector, useDispatch } from "react-redux";
-import { HiOutlineShoppingBag } from "react-icons/hi";
 import { Badge } from "@mui/material";
 import { Link } from 'react-router-dom'
  
@@ -17,7 +16,7 @@ const Navbar = () => {
   const cart = useSelector((state) => state.cart.cart);
 
   return (
-    <nav className="app__navbar">
+    <div className="app__navbar">
       <div className="app__navbar-left">
         <div className="app__navbar-logo">
           <Link to='home'>
@@ -99,7 +98,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </div>
-    </nav>
+    </div>
   );
 };
 

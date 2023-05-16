@@ -1,0 +1,94 @@
+.app__seller {
+    display: flex;
+    gap: 1rem;
+
+    transition: var(--smooth);
+
+    .app__sideNav {
+
+        flex: 0.25;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--white-color);
+        border-radius: 10px;
+        transition: var(--smooth);
+        box-shadow: var(--soft);
+        min-height: 1vh;
+        padding: 0.5rem;
+        position: sticky;
+        top: 0;
+        left: 0;
+        /* Set to stick to the left side */
+        right: 0;
+
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .upper-panel {
+            transition: var(--smooth);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            width: 100%;
+
+            .app__sideNav-btn {
+                transition: var(--smooth);
+                display: flex;
+                flex-direction: row-reverse;
+                align-items: center;
+                justify-content: space-between;
+                padding: 1.3rem 2rem;
+                width: 100%;
+                box-shadow: var(--soft);
+                border-radius: 20px;
+                outline: none;
+                border: none;
+                background-color: var(--white-color);
+
+                &:hover {
+                    background-color: var(--secondary-color);
+                    color: var(--white-color);
+
+                    svg {
+                        color: var(--white-color);
+                    }
+                }
+
+                &:active {
+                    background-color: var(--lightGray-color);
+
+                    svg {
+                        color: var(--white-color);
+                    }
+                }
+
+                &:focus {
+                    background-color: var(--gray-color);
+                    color: var(--white-color);
+
+                    svg {
+                        color: var(--white-color);
+                    }
+                }
+
+                svg {
+                    width: 25px;
+                    height: 25px;
+                    color: rgb(26, 105, 154);
+
+                }
+            }
+        }
+
+        .lower-panel {
+            display: flex;
+            align-items: center;
+
+        }
+
+    }
+
+}

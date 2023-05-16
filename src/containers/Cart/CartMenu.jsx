@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { client, urlFor } from "../../client";
+
 import styled from "@emotion/styled";
 import {
-  addToCart,
   removeFromCart,
   increaseCount,
   decreaseCount,
@@ -43,6 +42,7 @@ const CartMenu = () => {
       left="0"
       top="0"
       overflow="auto"
+      
     >
       <Box
         position="fixed"

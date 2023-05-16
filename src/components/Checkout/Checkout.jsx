@@ -3,15 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import "./Checkout.scss";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import CartAnim from "./CartAnim";
-import { Divider } from "@mui/material";
+
 
 import {
-  addToCart,
-  removeFromCart,
   increaseCount,
   decreaseCount,
-  setIsCartOpen,
   clearCart,
 } from "../../state";
 //import { clearCart } from "../state";

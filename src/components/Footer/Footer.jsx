@@ -1,11 +1,10 @@
 import React from "react";
-import { images } from "../../constants";
+
 import {
   FaFacebook,
   FaWhatsapp,
   FaInstagram,
   FaTwitter,
-  FaCartArrowDown,
 } from "react-icons/fa";
 import "./Footer.scss";
 

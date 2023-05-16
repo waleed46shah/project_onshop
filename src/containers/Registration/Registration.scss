@@ -1,0 +1,39 @@
+.app__registration{
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 2rem 2rem;
+    transition: var(--smooth);
+    .app__registration-container{
+        display: flex;
+        padding: 24px 32px;
+        box-shadow: var(--soft);
+        border-radius: 10px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+        align-self: center;
+        justify-self: center;
+        transition: var(--smooth);
+        .app__registration-form{
+            
+            display: flex;
+            flex-direction: column;
+            width: 500px;
+            gap: 5px;
+            form{
+                transition: var(--smooth);
+            }
+            label{
+                font-weight: 500;
+            }
+            .error{
+                color:red;
+                transition: var(--smooth);
+            }
+        }
+    }
+}

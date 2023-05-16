@@ -9,6 +9,11 @@ export default{
             type:'string',
         },
         {
+            name: 'isActive',
+            title:'isActive',
+            type: 'string',
+          },
+        {
             name:'description',
             title:'Description',
             type:'text',
@@ -43,6 +48,12 @@ export default{
             title:'Discount',
             type:'number',
         },
+        {
+            name:'quantity',
+            title:'Quantity',
+            type:'number'
+        }
+        ,
         {
             name:'image',
             title:'image',

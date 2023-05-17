@@ -26,6 +26,11 @@ export default {
         type: 'string',
       },
       {
+        name: 'isLoggedin',
+        title:'isLoggedIn',
+        type: 'string',
+      },
+      {
         name: 'password',
         title:'Password',
         type: 'string',

@@ -59,6 +59,11 @@ export default{
             title:'image',
             type:'array',
             of:[{type:'image'}]
-        }
+        },
+        {
+            name:'addedOn',
+            title:'Added On',
+            type:'datetime',  
+        },
     ]
 }

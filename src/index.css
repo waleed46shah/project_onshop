@@ -10,6 +10,8 @@
   --gray-color: #494e56;
   --brown-color: #46364a;
   --white-color: #ffffff;
+  --blue-color: rgb(26, 105, 154);
+  --purple-color: rgb(136, 132, 216);
   --soft: 0px 2px 5px 0px rgba(0,0,0,0.15);
   --smooth: 0.3s all ease-in-out
 }

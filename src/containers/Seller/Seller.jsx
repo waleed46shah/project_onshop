@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Table } from 'react-bootstrap';
-import { DataGrid } from '@mui/x-data-grid';
+
 import { client, urlFor } from '../../client';
 import { TiHomeOutline, TiChartAreaOutline, TiEjectOutline, TiDropbox, TiUserOutline } from 'react-icons/ti'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar } from 'recharts';
 import './Seller.scss'
+import ProductTable from './ProductTable';
+
+
+
+const formattedDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+  
+  const formattedTime = (dateString) => {
+    const options = { hour: 'numeric', minute: 'numeric' };
+    return new Date(dateString).toLocaleTimeString(undefined, options);
+  };
 
 function getParsedDate(date) {
     date = String(date).split(' ');
@@ -24,9 +37,9 @@ const Seller = () => {
     const [selectedFilter, setSelectedFilter] = useState('all');
     const [filteredSalesData, setFilteredSalesData] = useState([]);
     const [salesData, setSalesData] = useState([]);
-    
+    const [orders, setOrders] = useState([]);
     useEffect(() => {
-        
+
         const fetchProducts = async () => {
             try {
                 const query = '*[_type == "product"]';
@@ -38,7 +51,17 @@ const Seller = () => {
                 console.error(error);
             }
         }
-
+        const fetchOrders = async () => {
+            try {
+                const query = '*[_type == "order"] | order(date desc)[0...9]';
+                await client.fetch(query).then((data) => {
+                  setOrders(data);
+                });
+            }
+            catch (error) {
+                console.error(error);
+            }
+        }
         const fetchSalesData = async () => {
             try {
                 const query = '*[_type == "order"]';
@@ -47,7 +70,7 @@ const Seller = () => {
 
                     // Accumulate sales for existing dates
                     data.forEach((sale) => {
-                        
+
                         const date = new Date(sale.orderTime).toLocaleDateString();
                         if (chartData[date]) {
                             chartData[date].sales += sale.total;
@@ -67,13 +90,13 @@ const Seller = () => {
         };
         fetchProducts();
         fetchSalesData();
-
+        fetchOrders();
     }, []);
 
 
     const deleteProduct = async (productId) => {
         // Delete a product from Sanity using GROQ query
-        console.log(productId)
+
         const query = `*[_type == "product" && _id == "${productId}"][0]._id`;
 
         await client.delete(productId)
@@ -159,32 +182,14 @@ const Seller = () => {
         setFilteredSalesData(filteredData);
     };
 
-    const renderSalesChart = () => {
-        return (
-
-            <BarChart width={600} height={300} data={salesData} >
-
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-
-                <Bar dataKey="sales" barSize={30} fill='#8884d8' />
-                {/* <Legend />
-                <Line type="monotone" dataKey="sales" stroke="#8884d8" activeDot={{ r: 8 }} /> */}
-            </BarChart>
-        );
-    };
 
 
     return (
         <Container className='app__seller app__section'>
             <div className='app__sideNav'>
-
-
-
+            <h2 className='head-text'>Hi! Seller</h2>
                 <div className="upper-panel">
-                    <h2 className='head-text'>Hi! Seller</h2>
+                    
                     <button className='app__sideNav-btn'>
                         <TiHomeOutline /> Home
                     </button>
@@ -195,63 +200,93 @@ const Seller = () => {
                         <TiChartAreaOutline /> Sales
                     </button>
                     <button className='app__sideNav-btn'>
-                        <TiDropbox /> Manage Products
+                        <TiDropbox /> Products
+                    </button>
+                    <button className='app__sideNav-btn' style={{ alignSelf: 'flex-end', justifySelf: 'flex-end' }}>
+                        <TiUserOutline /> Logout
                     </button>
                 </div>
 
-                <div className="lower-panel">
-                <button className='app__sideNav-btn' style={{ alignSelf: 'flex-end', justifySelf: 'flex-end' }}>
-                    <TiUserOutline /> Logout
-                </button>
-                </div>
-                
+
+
+
+
 
             </div>
-            <div className="app__seller-main">
+            <div className="app__seller-main" style={{ width: '100%' }}>
                 <h1>Seller Panel</h1>
-                
+
                 <Row>
                     <Col>
-                        <h2>Total Sales: {filteredSalesData.reduce((total, sale) => total + sale.sales, 0)}</h2>
-                        <div className="filter-buttons" style={{ display: 'flex', gap: '1rem' }}>
-                            <Button
-                                variant={selectedFilter === 'all' ? 'btn-primary' : 'outline-primary'}
-                                onClick={() => applyFilter('all')}
-                            >
-                                All
-                            </Button>
-                            <Button
-                                variant={selectedFilter === 'month' ? 'primary' : 'outline-primary'}
-                                onClick={() => applyFilter('month')}
-                            >
-                                Month
-                            </Button>
-                            <Button
-                                variant={selectedFilter === '15days' ? 'primary' : 'outline-primary'}
-                                onClick={() => applyFilter('15days')}
-                            >
-                                15 Days
-                            </Button>
-                            <Button
-                                variant={selectedFilter === '1week' ? 'primary' : 'outline-primary'}
-                                onClick={() => applyFilter('1week')}
-                            >
-                                1 Week
-                            </Button>
-                           
+                        <div className='app__seller-main-chart-container'>
+                            <div className='charts'>
+                                <div className="charts-upper-section">
+                                    <h2>Total Sales: Rs.{filteredSalesData.reduce((total, sale) => total + sale.sales, 0)}</h2>
+                                    <button className='filter-btn-outline'>See Details</button>
+                                </div>
+
+                                <div className="filter-buttons" style={{ display: 'flex', gap: '1rem' }}>
+                                    <Button
+                                        className='filter-btn'
+                                        onClick={() => applyFilter('all')}
+                                    >
+                                        All
+                                    </Button>
+                                    <Button
+                                        className='filter-btn'
+                                        onClick={() => applyFilter('month')}
+                                    >
+                                        Month
+                                    </Button>
+                                    <Button
+                                        className='filter-btn'
+                                        onClick={() => applyFilter('15days')}
+                                    >
+                                        15 Days
+                                    </Button>
+                                    <Button
+                                        className='filter-btn'
+                                        onClick={() => applyFilter('1week')}
+                                    >
+                                        1 Week
+                                    </Button>
+
+                                </div>
+
+                                <BarChart width={600} height={300} data={filteredSalesData}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="date" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Bar dataKey="sales" bar
+                                        Size={30} fill='#8884d8' />
+                                </BarChart>
+                            </div>
+                            <div className="recent-orders">
+                                <div className='charts-upper-section'>
+                                    <h2>Recent Orders</h2>
+                                    <button className='filter-btn-outline'>See All</button>
+                                </div>
+                                <div className="orders">
+
+                                    {orders.map((order) => {
+                                        return (
+                                            <div className='order-item' key={order._id}>
+                                                <div className="name-id" style={{ display: "flex", flexDirection: "column" }}>
+                                                    <h4>{order.orderName}</h4>
+                                                    <p>{order.productID}</p>
+                                                </div>
+                                                <p>{order.quantity}</p>
+                                                <p>{order.orderTime}</p>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
                         </div>
-                        <BarChart width={600} height={300} data={filteredSalesData}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="date" />
-                            <YAxis />
-                            <Tooltip />
-                            <Bar dataKey="sales" bar
-                                Size={30} fill='#8884d8' />
-                        </BarChart>
                     </Col>
                     <Col>
-                        <h2>Products</h2>
-                        {renderProductsTable()}
+                        <ProductTable />
                     </Col>
                 </Row>
             </div>

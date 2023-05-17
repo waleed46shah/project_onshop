@@ -67,3 +67,44 @@
   color: #1919198e;
   font-size: 18px;
 }
+
+.filter-btn{
+  cursor: pointer;
+  padding: 0.8rem 2rem;
+  border-radius: 15px;
+  box-shadow: var(--soft);
+  border: none;
+  outline: none;
+  background-color: white;
+  color: var(--purple-color);
+  font-weight: bold;  
+  transition: var(--smooth);
+  &:active,&:hover{
+      background-color: var(--purple-color);
+      color: white;
+  }
+  &:focus{
+      background-color: var(--purple-color);
+      color: white;
+  }
+
+}
+
+.filter-btn-outline{
+  cursor: pointer;
+  padding: 0.8rem 2rem;
+  border-radius: 15px;
+  box-shadow: var(--soft);
+  border: 1px solid var(--purple-color);
+  outline: none;
+  background-color: white;
+  color: var(--purple-color);
+  font-weight: bold;  
+  transition: var(--smooth);
+  &:active,&:hover{
+      background-color: var(--purple-color);
+      color: white;
+  }
+  
+
+}
